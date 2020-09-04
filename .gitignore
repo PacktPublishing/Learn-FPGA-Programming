@@ -1,0 +1,13 @@
+core.*
+*~
+*.swp
+*#
+*.#
+*.o
+*.out
+*.log
+*.jou
+*.str
+.Xil
+*.backup
+*.orig
