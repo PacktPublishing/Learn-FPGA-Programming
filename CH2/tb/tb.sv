@@ -35,7 +35,7 @@ module tb;
     if (TEST_CASE == "LEADING_ONES") begin
       LED_TB[$clog2(BITS):0]  = LO_LED;
     end else if (TEST_CASE == "NUM_ONES") begin
-      LED_TB = MULT_LED;
+      LED_TB = NO_LED;
     end else if (TEST_CASE == "ADD" || TEST_CASE == "SUB") begin
       LED_TB = AS_LED;
     end else if (TEST_CASE == "MULT") begin
