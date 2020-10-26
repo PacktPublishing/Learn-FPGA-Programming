@@ -9,7 +9,7 @@ module seven_segment
   (
    input wire                         clk,
    input wire [NUM_SEGMENTS-1:0][3:0] encoded,
-   input wire [NUM_SEGMENTS-1:0]      decimal,
+   input wire [NUM_SEGMENTS-1:0]      digit_point,
    output logic [NUM_SEGMENTS-1:0]    anode,
    output logic [7:0]                 cathode
    );
@@ -24,7 +24,7 @@ module seven_segment
     (
      .clk        (clk),
      .encoded    (encoded),
-     .decimal    (decimal),
+     .digit_point(digit_point),
      .cathode    (segments)
      );
 

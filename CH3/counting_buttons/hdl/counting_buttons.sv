@@ -17,7 +17,7 @@ module counting_buttons
    );
 
   logic [NUM_SEGMENTS-1:0][3:0]       encoded;
-  logic [NUM_SEGMENTS-1:0]            decimal;
+  logic [NUM_SEGMENTS-1:0]            digit_point;
 
   seven_segment
     #
@@ -30,7 +30,7 @@ module counting_buttons
     (
      .clk          (clk),
      .encoded      (encoded),
-     .decimal      (decimal),
+     .digit_point  (digit_point),
      .anode        (anode),
      .cathode      (cathode)
      );
@@ -86,15 +86,15 @@ module counting_buttons
   endgenerate
 
   initial begin
-    encoded = '0;
-    decimal = '1;
+    encoded     = '0;
+    digit_point = '1;
   end
 
   always @(posedge clk) begin
     if (button_down) encoded <= (MODE == "HEX") ? encoded + 1'b1 : dec_inc(encoded);
     if (~CPU_RESETN) begin
-      encoded <= '0;
-      decimal <= '1;
+      encoded     <= '0;
+      digit_point <= '1;
     end
   end
 

@@ -3,12 +3,12 @@ module cathode_top
   (
    input wire         clk,
    input wire [3:0]   encoded,
-   input wire         decimal,
+   input wire         digit_point,
    output logic [7:0] cathode
    );
 
   always_ff @(posedge clk) begin
-    cathode[7] <= decimal;
+    cathode[7] <= digit_point;
     case (encoded)
       4'h0: cathode[6:0] <= 7'b1000000;
       4'h1: cathode[6:0] <= 7'b1111001;

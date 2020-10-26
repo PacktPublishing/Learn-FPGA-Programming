@@ -34,7 +34,7 @@ module calculator_top
 
   logic [31:0]                        accumulator;
   (* mark_debug = "true" *) logic [NUM_SEGMENTS-1:0][3:0]       encoded;
-  logic [NUM_SEGMENTS-1:0]            decimal;
+  logic [NUM_SEGMENTS-1:0]            digit_point;
 
   // Capture button events
   (* ASYNC_REG = "TRUE" *) logic [2:0] button_sync;
@@ -54,7 +54,7 @@ module calculator_top
     (
      .clk          (clk_50),
      .encoded      (encoded),
-     .decimal      (decimal),
+     .digit_point  (digit_point),
      .anode        (anode),
      .cathode      (cathode)
      );
@@ -115,8 +115,8 @@ module calculator_top
   endgenerate
 
   always @(posedge clk_50) begin
-    encoded <= bin_to_bcd(accumulator);
-    decimal <= '1;
+    encoded     <= bin_to_bcd(accumulator);
+    digit_point <= '1;
   end
 
 endmodule // calculator_top

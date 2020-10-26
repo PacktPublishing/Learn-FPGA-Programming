@@ -1,8 +1,12 @@
+`ifndef NUM_SEGMENTS
+`define NUM_SEGMENTS 8
+`endif
+
 `ifndef _CALCULATOR_PKG
 `define _CALCULATOR_PKG
 package calculator_pkg;
 
-  localparam NUM_SEGMENTS = 8;
+  localparam NUM_SEGMENTS = `NUM_SEGMENTS;
   localparam UP           = 3'd0;
   localparam DOWN         = 3'd1;
   localparam LEFT         = 3'd2;
