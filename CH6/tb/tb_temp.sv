@@ -16,6 +16,7 @@ module tb_temp;
   // 7 segment display
   logic [NUM_SEGMENTS-1:0] anode;
   logic [7:0]              cathode;
+  logic                    sda_en;
 
   initial clk = '0;
   always begin
@@ -39,9 +40,23 @@ module tb_temp;
      .TMP_INT      (TMP_INT),
      .TMP_CT       (TMP_CT),
 
+     .SW           (1'b1),
+
      // 7 segment display
      .anode        (anode),
      .cathode      (cathode)
      );
+
+  always @(posedge clk) begin
+    sda_en <= '0;
+    case (u_i2c_temp.bit_count)
+      5'h0a, 5'h0b, 5'h0c, 5'h0d: sda_en <= '1;
+      5'h10, 5'h11: sda_en               <= '1;
+      5'h14, 5'h15, 5'h16, 5'h17: sda_en <= '1;
+      5'h18, 5'h19, 5'h1a: sda_en        <= '1;
+    endcase // case (u_i2c_temp.bit_count)
+  end
+
+  assign TMP_SDA = sda_en ? '0 : 'z;
 
 endmodule

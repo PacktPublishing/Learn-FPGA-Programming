@@ -20,7 +20,7 @@ package calculator_pkg;
     shifted    = {30'b0, bin_in[31:30]};
     for (int i = 29; i >= 1; i--) begin
       shifted = shifted << 1 | bin_in[i];
-      for (int j = 0; j < 8; j++) begin
+      for (int j = 0; j < NUM_SEGMENTS; j++) begin
         if (shifted[j*4+:4] > 4) shifted[j*4+:4] += 3;
       end
     end

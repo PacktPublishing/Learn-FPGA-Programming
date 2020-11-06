@@ -52,7 +52,7 @@ module i2c_temp
   logic [NUM_SEGMENTS-1:0][3:0]    encoded;
   logic [NUM_SEGMENTS-1:0][3:0]    encoded_int;
   logic [NUM_SEGMENTS-1:0][3:0]    encoded_frac;
-  logic [NUM_SEGMENTS-1:0]         decimal;
+  logic [NUM_SEGMENTS-1:0]         digit_point;
   (* mark_debug = "true" *) logic                            sda_en;
   (* mark_debug = "true" *) logic                            scl_en;
   logic [I2CBITS-1:0]              i2c_data;
@@ -75,7 +75,7 @@ module i2c_temp
     (
      .clk          (clk),
      .encoded      (encoded),
-     .decimal      (~decimal),
+     .digit_point  (~digit_point),
      .anode        (anode),
      .cathode      (cathode)
      );
@@ -299,7 +299,7 @@ module i2c_temp
     if (smooth_convert) begin
       encoded_int  <= bin_to_bcd(smooth_data[12:4]); // Decimal portion
       fraction     <= bin_to_bcd(fraction_table[smooth_data[3:0]]);
-      decimal      <= 8'b00010000;
+      digit_point  <= 8'b00010000;
     end
   end // always @ (posedge clk)
 

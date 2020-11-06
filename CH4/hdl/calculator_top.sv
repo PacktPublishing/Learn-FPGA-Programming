@@ -1,9 +1,12 @@
+`ifndef NUM_SEGMENTS
+`define NUM_SEGMENTS 8
+`endif
 `timescale 1ns/10ps
 module calculator_top
   #
   (
    parameter BITS         = 32,
-   parameter NUM_SEGMENTS = 8,
+   parameter NUM_SEGMENTS = `NUM_SEGMENTS,
    parameter SM_TYPE      = "MEALY", // MEALY or MOORE
    parameter USE_PLL      = "TRUE"
    )
