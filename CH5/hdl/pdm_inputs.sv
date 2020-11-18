@@ -20,15 +20,13 @@ module pdm_inputs
 
   localparam CLK_COUNT = int'((CLK_FREQ*1000000)/(SAMPLE_RATE*2));
 
-  logic [6:0]                        counter;
+  logic [1:0][7:0]                   counter;
   logic [1:0][7:0]                   sample_counter;
-  logic [1:0]                        en_chan;
   logic [$clog2(CLK_COUNT)-1:0]      clk_counter;
 
   initial begin
     sample_counter = '0;
     counter        = '0;
-    en_chan        = 2'b01;
     m_clk          = '0;
     clk_counter    = '0;
   end
@@ -41,24 +39,29 @@ module pdm_inputs
       clk_counter <= '0;
       m_clk       <= ~m_clk;
       m_clk_en    <= ~m_clk;
-    end else
+    end else begin
       clk_counter <= clk_counter + 1;
+      if (clk_counter == CLK_COUNT - 2) m_clk_en    <= ~m_clk;
+    end
 
     if (m_clk_en) begin
-      counter  <= counter + 1'b1;
-      sample_counter[0] <= sample_counter[0] + m_data;
-      sample_counter[1] <= sample_counter[1] + m_data;
-
-      if (en_chan[1] && counter == 63) begin
-        amplitude_valid   <= '1;
-        sample_counter[1] <= '0;
-        amplitude         <= sample_counter[1] + m_data;
-        en_chan[1]        <= '1;
-      end
-      if (en_chan[0] && counter == 127) begin
+      counter[0]        <= counter[0] + 1'b1;
+      counter[1]        <= counter[1] + 1'b1;
+      if (counter[0] == 199) begin
+        counter[0]        <= '0;
+        amplitude         <= sample_counter[0];
         amplitude_valid   <= '1;
         sample_counter[0] <= '0;
-        amplitude         <= sample_counter[0] + m_data;
+      end else if (counter[0] < 128) begin
+        sample_counter[0] <= sample_counter[0] + m_data;
+      end
+      if (counter[1] == 227) begin
+        counter[1]        <= '0;
+        amplitude         <= sample_counter[1] + m_data;
+        amplitude_valid   <= '1;
+        sample_counter[1] <= '0;
+      end else if (counter[1] > 100) begin
+        sample_counter[1] <= sample_counter[1] + m_data;
       end
     end
   end // always @ (posedge clk)
