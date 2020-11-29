@@ -1,0 +1,68 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.86248",
+   "Default View_TopLeft":"402,-226",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:9.0 TLS
+#  -string -flagsOSRD
+preplace port sys_clock -pg 1 -lvl 0 -x 0 -y 160 -defaultsOSRD
+preplace port reset -pg 1 -lvl 0 -x 0 -y 100 -defaultsOSRD
+preplace port TMP_SCL -pg 1 -lvl 6 -x 1670 -y 90 -defaultsOSRD
+preplace port TMP_SDA -pg 1 -lvl 6 -x 1670 -y 110 -defaultsOSRD
+preplace port TMP_INT -pg 1 -lvl 6 -x 1670 -y 130 -defaultsOSRD
+preplace port TMP_CT -pg 1 -lvl 6 -x 1670 -y 150 -defaultsOSRD
+preplace port SW -pg 1 -lvl 0 -x 0 -y 540 -defaultsOSRD
+preplace port LED -pg 1 -lvl 6 -x 1670 -y 530 -defaultsOSRD
+preplace port reset_0 -pg 1 -lvl 0 -x 0 -y 940 -defaultsOSRD
+preplace portBus anode -pg 1 -lvl 6 -x 1670 -y 450 -defaultsOSRD
+preplace portBus cathode -pg 1 -lvl 6 -x 1670 -y 470 -defaultsOSRD
+preplace inst adt7420_i2c_0 -pg 1 -lvl 5 -x 1510 -y 110 -defaultsOSRD
+preplace inst seven_segment_0 -pg 1 -lvl 5 -x 1510 -y 460 -defaultsOSRD
+preplace inst flt_temp_0 -pg 1 -lvl 4 -x 1170 -y 370 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 2 -x 420 -y 150 -defaultsOSRD
+preplace inst fixed_to_float -pg 1 -lvl 3 -x 750 -y 270 -defaultsOSRD
+preplace inst float_to_fixed -pg 1 -lvl 3 -x 750 -y 640 -defaultsOSRD
+preplace inst fp_addsub -pg 1 -lvl 3 -x 750 -y 110 -defaultsOSRD
+preplace inst fp_fused -pg 1 -lvl 3 -x 750 -y 440 -defaultsOSRD
+preplace inst fp_mult -pg 1 -lvl 3 -x 750 -y 800 -defaultsOSRD
+preplace inst reset_inv_0 -pg 1 -lvl 1 -x 170 -y 100 -defaultsOSRD
+preplace inst system_ila_0 -pg 1 -lvl 4 -x 1170 -y 110 -defaultsOSRD
+preplace inst rst_design_1_100M -pg 1 -lvl 3 -x 750 -y 960 -defaultsOSRD
+preplace netloc sys_clock_1 1 0 2 NJ 160 NJ
+preplace netloc clk_wiz_0_clk_out1 1 2 3 530 340 970 30 1370
+preplace netloc reset_1 1 0 1 NJ 100
+preplace netloc reset_inv_0_Res 1 1 1 320J 100n
+preplace netloc Net 1 5 1 NJ 90
+preplace netloc Net1 1 5 1 NJ 110
+preplace netloc Net2 1 5 1 NJ 130
+preplace netloc Net3 1 5 1 NJ 150
+preplace netloc seven_segment_0_anode 1 5 1 NJ 450
+preplace netloc seven_segment_0_cathode 1 5 1 NJ 470
+preplace netloc SW_0_1 1 0 4 NJ 540 NJ 540 520J 550 1000J
+preplace netloc flt_temp_0_LED 1 4 2 1360J 390 1650J
+preplace netloc rst_design_1_100M_peripheral_aresetn 1 3 1 980 130n
+preplace netloc reset_0_1 1 0 3 NJ 940 NJ 940 NJ
+preplace netloc float_to_fixed_M_AXIS_RESULT 1 3 1 990 370n
+preplace netloc flt_temp_0_fp_temp 1 2 3 540 560 NJ 560 1350
+preplace netloc adt7420_i2c_0_fix_temp 1 2 4 540 0 NJ 0 NJ 0 1650
+preplace netloc fixed_to_float_M_AXIS_RESULT 1 3 1 960 270n
+preplace netloc fp_addsub_M_AXIS_RESULT 1 3 1 950 90n
+preplace netloc flt_temp_0_addsub_a 1 2 3 550 10 NJ 10 1350
+preplace netloc flt_temp_0_addsub_b 1 2 3 560 20 NJ 20 1340
+preplace netloc flt_temp_0_addsub_op 1 2 3 560 200 NJ 200 1320
+preplace netloc fp_fused_M_AXIS_RESULT 1 3 1 960 350n
+preplace netloc flt_temp_0_fused_a 1 2 3 560 350 940J 210 1310
+preplace netloc flt_temp_0_fused_b 1 2 3 550 540 NJ 540 1340
+preplace netloc flt_temp_0_fused_c 1 2 3 560 530 NJ 530 1310
+preplace netloc flt_temp_0_seven_segment 1 4 1 N 450
+preplace netloc fp_mult_M_AXIS_RESULT 1 3 1 1010 390n
+preplace netloc flt_temp_0_mult_a 1 2 3 550 570 NJ 570 1330
+preplace netloc flt_temp_0_mult_b 1 2 3 560 710 NJ 710 1320
+levelinfo -pg 1 0 170 420 750 1170 1510 1670
+pagesize -pg 1 -db -bbox -sgen -120 -10 1820 1060
+"
+}
+{
+   "da_board_cnt":"2",
+   "da_clkrst_cnt":"6"
+}
