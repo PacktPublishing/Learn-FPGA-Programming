@@ -11,11 +11,11 @@ set_property CFGBVS VCCO [current_design]
 set_property CONFIG_VOLTAGE 3.3 [current_design]
 
 ##Switches
-set_property -dict { PACKAGE_PIN J15   IOSTANDARD LVCMOS33 } [get_ports { SW[0] }]; #IO_L24N_T3_RS0_15 Sch=sw[0]
-set_property -dict { PACKAGE_PIN L16   IOSTANDARD LVCMOS33 } [get_ports { SW[1] }]; #IO_L3N_T0_DQS_EMCCLK_14 Sch=sw[1]
-set_property -dict { PACKAGE_PIN M13   IOSTANDARD LVCMOS33 } [get_ports { SW[2] }]; #IO_L6N_T0_D08_VREF_14 Sch=sw[2]
-set_property -dict { PACKAGE_PIN R15   IOSTANDARD LVCMOS33 } [get_ports { SW[3] }]; #IO_L13N_T2_MRCC_14 Sch=sw[3]
-set_property -dict { PACKAGE_PIN R17   IOSTANDARD LVCMOS33 } [get_ports { SW[4] }]; #IO_L12N_T1_MRCC_14 Sch=sw[4]
+set_property -dict {PACKAGE_PIN J15 IOSTANDARD LVCMOS33} [get_ports {SW[0]}]
+set_property -dict {PACKAGE_PIN L16 IOSTANDARD LVCMOS33} [get_ports {SW[1]}]
+set_property -dict {PACKAGE_PIN M13 IOSTANDARD LVCMOS33} [get_ports {SW[2]}]
+set_property -dict {PACKAGE_PIN R15 IOSTANDARD LVCMOS33} [get_ports {SW[3]}]
+set_property -dict {PACKAGE_PIN R17 IOSTANDARD LVCMOS33} [get_ports {SW[4]}]
 #set_property -dict { PACKAGE_PIN T18   IOSTANDARD LVCMOS33 } [get_ports { SW[5] }]; #IO_L7N_T1_D10_14 Sch=sw[5]
 #set_property -dict { PACKAGE_PIN U18   IOSTANDARD LVCMOS33 } [get_ports { SW[6] }]; #IO_L17N_T2_A13_D29_14 Sch=sw[6]
 #set_property -dict { PACKAGE_PIN R13   IOSTANDARD LVCMOS33 } [get_ports { SW[7] }]; #IO_L5N_T0_D07_14 Sch=sw[7]
@@ -73,7 +73,7 @@ set_property -dict { PACKAGE_PIN R17   IOSTANDARD LVCMOS33 } [get_ports { SW[4] 
 #set_property -dict { PACKAGE_PIN U13   IOSTANDARD LVCMOS33 } [get_ports { AN[7] }]; #IO_L23N_T3_A02_D18_14 Sch=an[7]
 
 ##Buttons
-set_property -dict { PACKAGE_PIN C12   IOSTANDARD LVCMOS33 } [get_ports { cpu_resetn }]; #IO_L3P_T0_DQS_AD1P_15 Sch=cpu_resetn
+set_property -dict {PACKAGE_PIN C12 IOSTANDARD LVCMOS33} [get_ports cpu_resetn]
 set_property -dict {PACKAGE_PIN N17 IOSTANDARD LVCMOS33} [get_ports button_c]
 #set_property -dict {PACKAGE_PIN M18 IOSTANDARD LVCMOS33} [get_ports BTNU]
 #set_property -dict { PACKAGE_PIN P17   IOSTANDARD LVCMOS33 } [get_ports { BTNL }]; #IO_L12P_T1_MRCC_14 Sch=btnl
@@ -133,20 +133,20 @@ set_property -dict {PACKAGE_PIN N17 IOSTANDARD LVCMOS33} [get_ports button_c]
 #set_property -dict { PACKAGE_PIN B18   IOSTANDARD LVCMOS33 } [get_ports { XA_P[4] }]; #IO_L10P_T1_AD11P_15 Sch=xa_p[4]
 
 ##VGA Connector
-set_property -dict { PACKAGE_PIN A3    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[8] }]; #IO_L8N_T1_AD14N_35 Sch=vga_r[0]
-set_property -dict { PACKAGE_PIN B4    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[9] }]; #IO_L7N_T1_AD6N_35 Sch=vga_r[1]
-set_property -dict { PACKAGE_PIN C5    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[10] }]; #IO_L1N_T0_AD4N_35 Sch=vga_r[2]
-set_property -dict { PACKAGE_PIN A4    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[11] }]; #IO_L8P_T1_AD14P_35 Sch=vga_r[3]
-set_property -dict { PACKAGE_PIN C6    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[4] }]; #IO_L1P_T0_AD4P_35 Sch=vga_g[0]
-set_property -dict { PACKAGE_PIN A5    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[5] }]; #IO_L3N_T0_DQS_AD5N_35 Sch=vga_g[1]
-set_property -dict { PACKAGE_PIN B6    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[6] }]; #IO_L2N_T0_AD12N_35 Sch=vga_g[2]
-set_property -dict { PACKAGE_PIN A6    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[7] }]; #IO_L3P_T0_DQS_AD5P_35 Sch=vga_g[3]
-set_property -dict { PACKAGE_PIN B7    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[0] }]; #IO_L2P_T0_AD12P_35 Sch=vga_b[0]
-set_property -dict { PACKAGE_PIN C7    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[1] }]; #IO_L4N_T0_35 Sch=vga_b[1]
-set_property -dict { PACKAGE_PIN D7    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[2] }]; #IO_L6N_T0_VREF_35 Sch=vga_b[2]
-set_property -dict { PACKAGE_PIN D8    IOSTANDARD LVCMOS33 } [get_ports { vga_rgb[3] }]; #IO_L4P_T0_35 Sch=vga_b[3]
-set_property -dict { PACKAGE_PIN B11   IOSTANDARD LVCMOS33 } [get_ports { vga_hsync }]; #IO_L4P_T0_15 Sch=vga_hs
-set_property -dict { PACKAGE_PIN B12   IOSTANDARD LVCMOS33 } [get_ports { vga_vsync }]; #IO_L3N_T0_DQS_AD1N_15 Sch=vga_vs
+set_property -dict {PACKAGE_PIN A3 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[8]}]
+set_property -dict {PACKAGE_PIN B4 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[9]}]
+set_property -dict {PACKAGE_PIN C5 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[10]}]
+set_property -dict {PACKAGE_PIN A4 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[11]}]
+set_property -dict {PACKAGE_PIN C6 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[4]}]
+set_property -dict {PACKAGE_PIN A5 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[5]}]
+set_property -dict {PACKAGE_PIN B6 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[6]}]
+set_property -dict {PACKAGE_PIN A6 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[7]}]
+set_property -dict {PACKAGE_PIN B7 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[0]}]
+set_property -dict {PACKAGE_PIN C7 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[1]}]
+set_property -dict {PACKAGE_PIN D7 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[2]}]
+set_property -dict {PACKAGE_PIN D8 IOSTANDARD LVCMOS33} [get_ports {vga_rgb[3]}]
+set_property -dict {PACKAGE_PIN B11 IOSTANDARD LVCMOS33} [get_ports vga_hsync]
+set_property -dict {PACKAGE_PIN B12 IOSTANDARD LVCMOS33} [get_ports vga_vsync]
 
 ##Micro SD Connector
 #set_property -dict { PACKAGE_PIN E2    IOSTANDARD LVCMOS33 } [get_ports { SD_RESET }]; #IO_L14P_T2_SRCC_35 Sch=sd_reset
@@ -212,21 +212,27 @@ set_property -dict {PACKAGE_PIN D12 IOSTANDARD LVCMOS33} [get_ports AUD_SD]
 #set_property -dict { PACKAGE_PIN M14   IOSTANDARD LVCMOS33 } [get_ports { QSPI_DQ[3] }]; #IO_L2N_T0_D03_14 Sch=qspi_dq[3]
 #set_property -dict { PACKAGE_PIN L13   IOSTANDARD LVCMOS33 } [get_ports { QSPI_CSN }]; #IO_L6P_T0_FCS_B_14 Sch=qspi_csn
 
-set_max_delay -datapath_only 5.0 -from */horiz_display_start_reg*
-set_max_delay -datapath_only 5.0 -from */horiz_display_width_reg*
-set_max_delay -datapath_only 5.0 -from */horiz_sync_width_reg*
-set_max_delay -datapath_only 5.0 -from */horiz_total_width_reg*
-set_max_delay -datapath_only 5.0 -from */vert_display_start_reg*
-set_max_delay -datapath_only 5.0 -from */vert_display_width_reg*
-set_max_delay -datapath_only 5.0 -from */vert_sync_width_reg*
-set_max_delay -datapath_only 5.0 -from */vert_total_width_reg*
-set_max_delay -datapath_only 5.0 -from */disp_addr_reg*
-set_max_delay -datapath_only 5.0 -from */polarity_reg*
-set_max_delay -datapath_only 5.0 -from */pixel_depth_reg*
-set_max_delay -datapath_only 5.0 -from */pitch_reg_reg*
-set_max_delay -datapath_only 6.0 -from *sw_capt_reg*/C
+create_clock -period 7.41 -name vga_clk -add [get_pins u_clk/clk_out1]
+set vga_clk_period [get_property PERIOD [get_clocks vga_clk]]
+set clk200_period  [get_property PERIOD [get_clocks clk_out1_sys_clk]]
+set clkui_period  [get_property PERIOD [get_clocks clk_pll_i]]
+
+set_max_delay -datapath_only -from */horiz_display_start_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */horiz_display_width_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */horiz_sync_width_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */horiz_total_width_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */vert_display_start_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */vert_display_width_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */vert_sync_width_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */vert_total_width_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */disp_addr_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */polarity_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */pixel_depth_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */pitch_reg_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from *sw_capt_reg*/C [expr 1.5 * $clkui_period]
+set_max_delay -datapath_only -from */mc_addr_reg* [expr 1.5 * $vga_clk_period]
+set_max_delay -datapath_only -from */mc_words_reg* [expr 1.5 * $vga_clk_period]
+
 set_false_path -from u_vga_core/load_mode_reg*/C -to */load_mode_sync_reg[0]/D
 set_false_path -from u_vga_core/mc_req_reg*/C -to */mc_req_sync_reg[0]/D
 set_false_path -from update_text_reg/C -to update_text_sync_reg[0]/D
-set_max_delay -datapath_only 5.0 -from */mc_addr_reg*
-set_max_delay -datapath_only 5.0 -from */mc_words_reg*

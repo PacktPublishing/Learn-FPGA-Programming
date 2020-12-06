@@ -204,7 +204,7 @@ module vga_core
     horiz_display_width_reg = 640;
     horiz_sync_width_reg    = 96;
     horiz_total_width_reg   = 799;
-    vert_display_start_reg  = 32;
+    vert_display_start_reg  = 31;
     //vert_display_start_reg  = 2;
     vert_display_width_reg  = 480;
     vert_sync_width_reg     = 2;
@@ -218,7 +218,7 @@ module vga_core
     horiz_sync_width        = 96;
     horiz_total_width       = 799;
     //vert_display_start      = 2;
-    vert_display_start      = 32;
+    vert_display_start      = 31;
     vert_display_width      = 480;
     vert_sync_width         = 2;
     vert_total_width        = 524;

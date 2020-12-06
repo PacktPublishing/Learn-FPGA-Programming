@@ -30,11 +30,11 @@ module vga
   logic                vga_hblank;
   logic                vga_vblank;
   logic                mc_clk;
-  logic                clk250;
+  logic                clk200;
 
   sys_clk u_sys_pll
     (
-     .clk_out1         (clk250),
+     .clk_out1         (clk200),
      .clk_out2         (mc_clk),
      .clk_in1          (clk)
      );
@@ -50,7 +50,7 @@ module vga
 
   pix_clk u_clk
     (
-     .s_axi_aclk       (clk250),
+     .s_axi_aclk       (clk200),
      .s_axi_aresetn    (1'b1),
      .s_axi_awaddr     (s_axi_awaddr),
      .s_axi_awvalid    (s_axi_awvalid[0]),
@@ -75,7 +75,7 @@ module vga
      // Status and control signals
      .locked           (locked),
      // Clock in ports
-     .clk_in1          (clk250)
+     .clk_in1          (clk200)
      );
 
   logic [7:0]          char_index;
@@ -214,7 +214,7 @@ module vga
      // System Clock Ports
      .sys_clk_i                      (mc_clk),
      // Reference Clock Ports
-     .clk_ref_i                      (clk250),
+     .clk_ref_i                      (clk200),
      .sys_rst                        (1'b0)
      );
 
@@ -223,7 +223,7 @@ module vga
   vga_core u_vga_core
     (
      // Register address
-     .reg_clk      (clk250),
+     .reg_clk      (clk200),
      .reg_reset    (ui_clk_sync_rst),
 
      .reg_awvalid  (s_axi_awvalid[1]),
@@ -700,7 +700,7 @@ module vga
   end
 
   // Clock reconfiguration
-  always @(posedge clk250) begin
+  always @(posedge clk200) begin
     button_sync <= button_sync << 1 | button_c;
     last_write[0]  <= wr_count == 24;
     last_write[1]  <= wr_count == 31;

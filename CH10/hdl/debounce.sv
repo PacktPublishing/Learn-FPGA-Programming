@@ -5,6 +5,7 @@ module debounce
    )
   (
    input wire   clk,
+   input wire   reset,
 
    input wire   sig_in,
    output logic sig_out
@@ -12,7 +13,7 @@ module debounce
 
   logic [$clog2(CYCLES):0] cycle_count;
   logic                    current_state;
-  logic [1:0]              sig_in_sync;
+  (* async_reg = "TRUE" *) logic [1:0] sig_in_sync;
 
   initial begin
     current_state = '0;
@@ -31,6 +32,11 @@ module debounce
       sig_out                <= current_state;
     end else begin
       cycle_count            <= cycle_count + 1'b1;
+    end
+    if (reset) begin
+      current_state <= '0;
+      cycle_count   <= '0;
+      sig_out       <= '0;
     end
   end
 endmodule // debounce

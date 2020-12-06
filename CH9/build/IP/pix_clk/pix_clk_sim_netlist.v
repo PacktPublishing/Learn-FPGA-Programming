@@ -1,7 +1,7 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.1 (lin64) Build 2902540 Wed May 27 19:54:35 MDT 2020
-// Date        : Wed Nov 25 18:26:45 2020
+// Date        : Mon Nov 30 10:29:24 2020
 // Host        : XilinxDev running 64-bit Ubuntu 20.04.1 LTS
 // Command     : write_verilog -force -mode funcsim
 //               /home/fbruno/git/books/Learn-FPGA-Programming/CH9/build/IP/pix_clk/pix_clk_sim_netlist.v

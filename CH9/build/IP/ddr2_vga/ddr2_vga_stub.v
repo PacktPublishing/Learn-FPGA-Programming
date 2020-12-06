@@ -1,7 +1,7 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.1 (lin64) Build 2902540 Wed May 27 19:54:35 MDT 2020
-// Date        : Sun Nov 22 20:32:02 2020
+// Date        : Mon Nov 30 10:29:51 2020
 // Host        : XilinxDev running 64-bit Ubuntu 20.04.1 LTS
 // Command     : write_verilog -force -mode synth_stub
 //               /home/fbruno/git/books/Learn-FPGA-Programming/CH9/build/IP/ddr2_vga/ddr2_vga_stub.v
