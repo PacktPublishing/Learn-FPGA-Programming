@@ -1,7 +1,7 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.1 (lin64) Build 2902540 Wed May 27 19:54:35 MDT 2020
-// Date        : Tue Nov 10 17:00:10 2020
+// Date        : Sun Dec  6 20:28:53 2020
 // Host        : XilinxDev running 64-bit Ubuntu 20.04.1 LTS
 // Command     : write_verilog -force -mode synth_stub
 //               /home/fbruno/git/books/Learn-FPGA-Programming/CH8/build/ddr2_example_board/ddr2_controller_ex/ddr2_controller_ex.srcs/sources_1/ip/ila_ddr2_axi/ila_ddr2_axi_stub.v
