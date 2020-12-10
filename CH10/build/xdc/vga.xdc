@@ -167,10 +167,10 @@ set_property -dict {PACKAGE_PIN B12 IOSTANDARD LVCMOS33} [get_ports vga_vsync]
 #set_property -dict { PACKAGE_PIN C16   IOSTANDARD LVCMOS33 } [get_ports { ACL_INT[2] }]; #IO_L20P_T3_A20_15 Sch=acl_int[2]
 
 ##Temperature Sensor
-#set_property -dict { PACKAGE_PIN C14   IOSTANDARD LVCMOS33 } [get_ports { TMP_SCL }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
-#set_property -dict { PACKAGE_PIN C15   IOSTANDARD LVCMOS33 } [get_ports { TMP_SDA }]; #IO_L12N_T1_MRCC_15 Sch=tmp_sda
-#set_property -dict { PACKAGE_PIN D13   IOSTANDARD LVCMOS33 } [get_ports { TMP_INT }]; #IO_L6N_T0_VREF_15 Sch=tmp_int
-#set_property -dict { PACKAGE_PIN B14   IOSTANDARD LVCMOS33 } [get_ports { TMP_CT }]; #IO_L2N_T0_AD8N_15 Sch=tmp_ct
+set_property -dict {PACKAGE_PIN C14 IOSTANDARD LVCMOS33} [get_ports TMP_SCL]
+set_property -dict {PACKAGE_PIN C15 IOSTANDARD LVCMOS33} [get_ports TMP_SDA]
+set_property -dict {PACKAGE_PIN D13 IOSTANDARD LVCMOS33} [get_ports TMP_INT]
+set_property -dict {PACKAGE_PIN B14 IOSTANDARD LVCMOS33} [get_ports TMP_CT]
 
 ##Omnidirectional Microphone
 set_property -dict {PACKAGE_PIN J5 IOSTANDARD LVCMOS33} [get_ports m_clk]
@@ -178,8 +178,6 @@ set_property -dict {PACKAGE_PIN H5 IOSTANDARD LVCMOS33} [get_ports m_data]
 set_property -dict {PACKAGE_PIN F5 IOSTANDARD LVCMOS33} [get_ports m_lr_sel]
 
 ##PWM Audio Amplifier
-set_property -dict {PACKAGE_PIN A11 IOSTANDARD LVCMOS33} [get_ports AUD_PWM]
-set_property -dict {PACKAGE_PIN D12 IOSTANDARD LVCMOS33} [get_ports AUD_SD]
 
 ##USB-RS232 Interface
 #set_property -dict { PACKAGE_PIN C4    IOSTANDARD LVCMOS33 } [get_ports { UART_TXD_IN }]; #IO_L7P_T1_AD6P_35 Sch=uart_txd_in
@@ -226,34 +224,137 @@ set_max_delay -datapath_only -from */vert_display_start_reg* 11.115
 set_max_delay -datapath_only -from */vert_display_width_reg* 11.115
 set_max_delay -datapath_only -from */vert_sync_width_reg* 11.115
 set_max_delay -datapath_only -from */vert_total_width_reg* 11.115
-set_max_delay -datapath_only -from */disp_addr_reg* [expr 1.5 * 7.410]
 set_max_delay -datapath_only -from */polarity_reg* 11.115
-set_max_delay -datapath_only -from */pixel_depth_reg* [expr 1.5 * 7.410]
 set_max_delay -datapath_only -from */pitch_reg_reg* 11.115
 set_max_delay -datapath_only -from *sw_capt_reg*/C 18.462
 set_max_delay -datapath_only -from */mc_addr_reg* 11.115
 set_max_delay -datapath_only -from */mc_words_reg* 11.115
 set_max_delay -datapath_only -from *ps2_data_capt* 18.462
+set_max_delay -datapath_only -from u_i2c_wrapper/capt_temp_reg*/C 11.115
 
 set_false_path -from u_vga_core/load_mode_reg*/C -to */load_mode_sync_reg[0]/D
 set_false_path -from u_vga_core/mc_req_reg*/C -to */mc_req_sync_reg[0]/D
 set_false_path -from update_text_reg/C -to update_text_sync_reg[0]/D
 set_false_path -from ps2_toggle_reg/C -to ps2_sync_reg[0]/D
-
-connect_debug_port u_ila_1/probe0 [get_nets [list {u_ps2_host/u_debounce[0]/FSM_onehot_state_reg[1][0]} {u_ps2_host/u_debounce[0]/FSM_onehot_state_reg[1][1]} {u_ps2_host/u_debounce[0]/FSM_onehot_state_reg[1][2]} {u_ps2_host/u_debounce[0]/FSM_onehot_state_reg[1][3]}]]
-connect_debug_port u_ila_1/probe1 [get_nets [list u_ps2_host/data_capture]]
-
-
-
-
-connect_debug_port u_ila_0/probe0 [get_nets [list {u_ps2_host/clk_count[0]} {u_ps2_host/clk_count[1]} {u_ps2_host/clk_count[2]} {u_ps2_host/clk_count[3]}]]
+set_false_path -from u_i2c_wrapper/update_temp_reg/C -to update_temp_sync_reg[0]/D
+set_false_path -from u_vga_core/vga_sync_toggle_reg/C -to vga_sync_toggle_sync_reg[0]/D
 
 
 
 
+connect_debug_port u_ila_0/probe4 [get_nets [list {pdm_din[data][0]} {pdm_din[data][1]} {pdm_din[data][2]} {pdm_din[data][3]} {pdm_din[data][4]} {pdm_din[data][5]} {pdm_din[data][6]} {pdm_din[data][7]} {pdm_din[data][8]} {pdm_din[data][9]} {pdm_din[data][10]} {pdm_din[data][11]} {pdm_din[data][12]} {pdm_din[data][13]} {pdm_din[data][14]} {pdm_din[data][15]} {pdm_din[data][16]} {pdm_din[data][17]} {pdm_din[data][18]} {pdm_din[data][19]} {pdm_din[data][20]} {pdm_din[data][21]} {pdm_din[data][22]} {pdm_din[data][23]} {pdm_din[data][24]} {pdm_din[data][25]} {pdm_din[data][26]} {pdm_din[data][27]} {pdm_din[data][28]} {pdm_din[data][29]} {pdm_din[data][30]} {pdm_din[data][31]} {pdm_din[data][32]} {pdm_din[data][33]} {pdm_din[data][34]} {pdm_din[data][35]} {pdm_din[data][36]} {pdm_din[data][37]} {pdm_din[data][38]} {pdm_din[data][39]} {pdm_din[data][40]} {pdm_din[data][41]} {pdm_din[data][42]} {pdm_din[data][43]} {pdm_din[data][44]} {pdm_din[data][45]} {pdm_din[data][46]} {pdm_din[data][47]} {pdm_din[data][48]} {pdm_din[data][49]} {pdm_din[data][50]} {pdm_din[data][51]} {pdm_din[data][52]} {pdm_din[data][53]} {pdm_din[data][54]} {pdm_din[data][55]} {pdm_din[data][56]} {pdm_din[data][57]} {pdm_din[data][58]} {pdm_din[data][59]} {pdm_din[data][60]} {pdm_din[data][61]} {pdm_din[data][62]} {pdm_din[data][63]} {pdm_din[data][64]} {pdm_din[data][65]} {pdm_din[data][66]} {pdm_din[data][67]} {pdm_din[data][68]} {pdm_din[data][69]} {pdm_din[data][70]} {pdm_din[data][71]} {pdm_din[data][72]} {pdm_din[data][73]} {pdm_din[data][74]} {pdm_din[data][75]} {pdm_din[data][76]} {pdm_din[data][77]} {pdm_din[data][78]} {pdm_din[data][79]} {pdm_din[data][80]} {pdm_din[data][81]} {pdm_din[data][82]} {pdm_din[data][83]} {pdm_din[data][84]} {pdm_din[data][85]} {pdm_din[data][86]} {pdm_din[data][87]} {pdm_din[data][88]} {pdm_din[data][89]} {pdm_din[data][90]} {pdm_din[data][91]} {pdm_din[data][92]} {pdm_din[data][93]} {pdm_din[data][94]} {pdm_din[data][95]} {pdm_din[data][96]} {pdm_din[data][97]} {pdm_din[data][98]} {pdm_din[data][99]} {pdm_din[data][100]} {pdm_din[data][101]} {pdm_din[data][102]} {pdm_din[data][103]} {pdm_din[data][104]} {pdm_din[data][105]} {pdm_din[data][106]} {pdm_din[data][107]} {pdm_din[data][108]} {pdm_din[data][109]} {pdm_din[data][110]} {pdm_din[data][111]} {pdm_din[data][112]} {pdm_din[data][113]} {pdm_din[data][114]} {pdm_din[data][115]} {pdm_din[data][116]} {pdm_din[data][117]} {pdm_din[data][118]} {pdm_din[data][119]} {pdm_din[data][120]} {pdm_din[data][121]} {pdm_din[data][122]} {pdm_din[data][123]} {pdm_din[data][124]} {pdm_din[data][125]} {pdm_din[data][126]} {pdm_din[data][127]}]]
 
-
-
-
-
-
+create_debug_core u_ila_0 ila
+set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
+set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0]
+set_property C_DATA_DEPTH 1024 [get_debug_cores u_ila_0]
+set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0]
+set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
+set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
+set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
+set_property port_width 1 [get_debug_ports u_ila_0/clk]
+connect_debug_port u_ila_0/clk [get_nets [list u_sys_pll/inst/clk_out1]]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
+set_property port_width 9 [get_debug_ports u_ila_0/probe0]
+connect_debug_port u_ila_0/probe0 [get_nets [list {rd_count[0]} {rd_count[1]} {rd_count[2]} {rd_count[3]} {rd_count[4]} {rd_count[5]} {rd_count[6]} {rd_count[7]} {rd_count[8]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
+set_property port_width 8 [get_debug_ports u_ila_0/probe1]
+connect_debug_port u_ila_0/probe1 [get_nets [list {pdm_din[data][8][0]} {pdm_din[data][8][1]} {pdm_din[data][8][2]} {pdm_din[data][8][3]} {pdm_din[data][8][4]} {pdm_din[data][8][5]} {pdm_din[data][8][6]} {pdm_din[data][8][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
+set_property port_width 8 [get_debug_ports u_ila_0/probe2]
+connect_debug_port u_ila_0/probe2 [get_nets [list {pdm_din[data][0][0]} {pdm_din[data][0][1]} {pdm_din[data][0][2]} {pdm_din[data][0][3]} {pdm_din[data][0][4]} {pdm_din[data][0][5]} {pdm_din[data][0][6]} {pdm_din[data][0][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
+set_property port_width 8 [get_debug_ports u_ila_0/probe3]
+connect_debug_port u_ila_0/probe3 [get_nets [list {pdm_din[data][9][0]} {pdm_din[data][9][1]} {pdm_din[data][9][2]} {pdm_din[data][9][3]} {pdm_din[data][9][4]} {pdm_din[data][9][5]} {pdm_din[data][9][6]} {pdm_din[data][9][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe4]
+set_property port_width 9 [get_debug_ports u_ila_0/probe4]
+connect_debug_port u_ila_0/probe4 [get_nets [list {pdm_din[address][0]} {pdm_din[address][1]} {pdm_din[address][2]} {pdm_din[address][3]} {pdm_din[address][4]} {pdm_din[address][5]} {pdm_din[address][6]} {pdm_din[address][7]} {pdm_din[address][8]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe5]
+set_property port_width 8 [get_debug_ports u_ila_0/probe5]
+connect_debug_port u_ila_0/probe5 [get_nets [list {pdm_din[data][7][0]} {pdm_din[data][7][1]} {pdm_din[data][7][2]} {pdm_din[data][7][3]} {pdm_din[data][7][4]} {pdm_din[data][7][5]} {pdm_din[data][7][6]} {pdm_din[data][7][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe6]
+set_property port_width 8 [get_debug_ports u_ila_0/probe6]
+connect_debug_port u_ila_0/probe6 [get_nets [list {pdm_din[data][12][0]} {pdm_din[data][12][1]} {pdm_din[data][12][2]} {pdm_din[data][12][3]} {pdm_din[data][12][4]} {pdm_din[data][12][5]} {pdm_din[data][12][6]} {pdm_din[data][12][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe7]
+set_property port_width 8 [get_debug_ports u_ila_0/probe7]
+connect_debug_port u_ila_0/probe7 [get_nets [list {pdm_din[data][11][0]} {pdm_din[data][11][1]} {pdm_din[data][11][2]} {pdm_din[data][11][3]} {pdm_din[data][11][4]} {pdm_din[data][11][5]} {pdm_din[data][11][6]} {pdm_din[data][11][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe8]
+set_property port_width 8 [get_debug_ports u_ila_0/probe8]
+connect_debug_port u_ila_0/probe8 [get_nets [list {pdm_din[data][13][0]} {pdm_din[data][13][1]} {pdm_din[data][13][2]} {pdm_din[data][13][3]} {pdm_din[data][13][4]} {pdm_din[data][13][5]} {pdm_din[data][13][6]} {pdm_din[data][13][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe9]
+set_property port_width 8 [get_debug_ports u_ila_0/probe9]
+connect_debug_port u_ila_0/probe9 [get_nets [list {pdm_din[data][6][0]} {pdm_din[data][6][1]} {pdm_din[data][6][2]} {pdm_din[data][6][3]} {pdm_din[data][6][4]} {pdm_din[data][6][5]} {pdm_din[data][6][6]} {pdm_din[data][6][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe10]
+set_property port_width 8 [get_debug_ports u_ila_0/probe10]
+connect_debug_port u_ila_0/probe10 [get_nets [list {pdm_din[data][1][0]} {pdm_din[data][1][1]} {pdm_din[data][1][2]} {pdm_din[data][1][3]} {pdm_din[data][1][4]} {pdm_din[data][1][5]} {pdm_din[data][1][6]} {pdm_din[data][1][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe11]
+set_property port_width 8 [get_debug_ports u_ila_0/probe11]
+connect_debug_port u_ila_0/probe11 [get_nets [list {pdm_din[data][3][0]} {pdm_din[data][3][1]} {pdm_din[data][3][2]} {pdm_din[data][3][3]} {pdm_din[data][3][4]} {pdm_din[data][3][5]} {pdm_din[data][3][6]} {pdm_din[data][3][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe12]
+set_property port_width 8 [get_debug_ports u_ila_0/probe12]
+connect_debug_port u_ila_0/probe12 [get_nets [list {pdm_din[data][5][0]} {pdm_din[data][5][1]} {pdm_din[data][5][2]} {pdm_din[data][5][3]} {pdm_din[data][5][4]} {pdm_din[data][5][5]} {pdm_din[data][5][6]} {pdm_din[data][5][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe13]
+set_property port_width 8 [get_debug_ports u_ila_0/probe13]
+connect_debug_port u_ila_0/probe13 [get_nets [list {pdm_din[data][2][0]} {pdm_din[data][2][1]} {pdm_din[data][2][2]} {pdm_din[data][2][3]} {pdm_din[data][2][4]} {pdm_din[data][2][5]} {pdm_din[data][2][6]} {pdm_din[data][2][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe14]
+set_property port_width 8 [get_debug_ports u_ila_0/probe14]
+connect_debug_port u_ila_0/probe14 [get_nets [list {pdm_din[data][4][0]} {pdm_din[data][4][1]} {pdm_din[data][4][2]} {pdm_din[data][4][3]} {pdm_din[data][4][4]} {pdm_din[data][4][5]} {pdm_din[data][4][6]} {pdm_din[data][4][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe15]
+set_property port_width 8 [get_debug_ports u_ila_0/probe15]
+connect_debug_port u_ila_0/probe15 [get_nets [list {pdm_din[data][10][0]} {pdm_din[data][10][1]} {pdm_din[data][10][2]} {pdm_din[data][10][3]} {pdm_din[data][10][4]} {pdm_din[data][10][5]} {pdm_din[data][10][6]} {pdm_din[data][10][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe16]
+set_property port_width 8 [get_debug_ports u_ila_0/probe16]
+connect_debug_port u_ila_0/probe16 [get_nets [list {pdm_din[data][14][0]} {pdm_din[data][14][1]} {pdm_din[data][14][2]} {pdm_din[data][14][3]} {pdm_din[data][14][4]} {pdm_din[data][14][5]} {pdm_din[data][14][6]} {pdm_din[data][14][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe17]
+set_property port_width 8 [get_debug_ports u_ila_0/probe17]
+connect_debug_port u_ila_0/probe17 [get_nets [list {pdm_din[data][15][0]} {pdm_din[data][15][1]} {pdm_din[data][15][2]} {pdm_din[data][15][3]} {pdm_din[data][15][4]} {pdm_din[data][15][5]} {pdm_din[data][15][6]} {pdm_din[data][15][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe18]
+set_property port_width 2 [get_debug_ports u_ila_0/probe18]
+connect_debug_port u_ila_0/probe18 [get_nets [list {wave_sm[0]} {wave_sm[1]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe19]
+set_property port_width 10 [get_debug_ports u_ila_0/probe19]
+connect_debug_port u_ila_0/probe19 [get_nets [list {amp_rd[0]} {amp_rd[1]} {amp_rd[2]} {amp_rd[3]} {amp_rd[4]} {amp_rd[5]} {amp_rd[6]} {amp_rd[7]} {amp_rd[8]} {amp_rd[9]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe20]
+set_property port_width 7 [get_debug_ports u_ila_0/probe20]
+connect_debug_port u_ila_0/probe20 [get_nets [list {amp_data[0]} {amp_data[1]} {amp_data[2]} {amp_data[3]} {amp_data[4]} {amp_data[5]} {amp_data[6]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe21]
+set_property port_width 7 [get_debug_ports u_ila_0/probe21]
+connect_debug_port u_ila_0/probe21 [get_nets [list {amplitude[0]} {amplitude[1]} {amplitude[2]} {amplitude[3]} {amplitude[4]} {amplitude[5]} {amplitude[6]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe22]
+set_property port_width 10 [get_debug_ports u_ila_0/probe22]
+connect_debug_port u_ila_0/probe22 [get_nets [list {amp_wr[0]} {amp_wr[1]} {amp_wr[2]} {amp_wr[3]} {amp_wr[4]} {amp_wr[5]} {amp_wr[6]} {amp_wr[7]} {amp_wr[8]} {amp_wr[9]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe23]
+set_property port_width 1 [get_debug_ports u_ila_0/probe23]
+connect_debug_port u_ila_0/probe23 [get_nets [list amplitude_valid]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe24]
+set_property port_width 1 [get_debug_ports u_ila_0/probe24]
+connect_debug_port u_ila_0/probe24 [get_nets [list pdm_push]]
+set_property C_CLK_INPUT_FREQ_HZ 300000000 [get_debug_cores dbg_hub]
+set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]
+set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]
+connect_debug_port dbg_hub/clk [get_nets clk200]

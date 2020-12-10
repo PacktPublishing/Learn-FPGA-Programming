@@ -131,10 +131,6 @@ module tb_ps2;
         // Wait for response
         rx_key(8'h00);
 
-
-
-
-
         repeat (100) @(posedge clk);
         send_key(8'h55, 1'b0);
         repeat (100) @(posedge clk);

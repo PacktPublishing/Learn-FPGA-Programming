@@ -28,6 +28,16 @@ module final_project
    inout               ps2_clk,
    inout               ps2_data,
 
+   inout wire          TMP_SCL,
+   inout wire          TMP_SDA,
+   inout wire          TMP_INT,
+   inout wire          TMP_CT,
+
+   // Microphone interface
+   output logic        m_clk,
+   output logic        m_lr_sel,
+   input wire          m_data,
+
    output logic [0:0]  LED
    );
 
@@ -48,8 +58,8 @@ module final_project
   logic [PS2_DEPTH*2-1:0][7:0] ps2_data_store;
   logic                        ps2_toggle;
   (* async_reg = "TRUE" *) logic [2:0] ps2_sync;
-  (* mark_debug = "TRUE" *) logic update_ps2;
-  (* mark_debug = "TRUE" *) logic clear_ps2;
+  logic update_ps2;
+  logic clear_ps2;
 
   debounce
     #
@@ -255,61 +265,62 @@ module final_project
      );
 
   wire [23:0]          int_vga_rgb;
-
+  logic                vga_sync_toggle;
   vga_core u_vga_core
     (
      // Register address
-     .reg_clk      (clk200),
-     .reg_reset    (ui_clk_sync_rst),
+     .reg_clk         (clk200),
+     .reg_reset       (ui_clk_sync_rst),
 
-     .reg_awvalid  (s_axi_awvalid[1]),
-     .reg_awready  (s_axi_awready[1]),
-     .reg_awaddr   (s_axi_awaddr),
+     .reg_awvalid     (s_axi_awvalid[1]),
+     .reg_awready     (s_axi_awready[1]),
+     .reg_awaddr      (s_axi_awaddr),
 
-     .reg_wvalid   (s_axi_wvalid[1]),
-     .reg_wready   (s_axi_wready[1]),
-     .reg_wdata    (s_axi_wdata),
-     .reg_wstrb    (4'b1111),
+     .reg_wvalid      (s_axi_wvalid[1]),
+     .reg_wready      (s_axi_wready[1]),
+     .reg_wdata       (s_axi_wdata),
+     .reg_wstrb       (4'b1111),
 
-     .reg_bready   (1'b1),
-     .reg_bvalid   (),
-     .reg_bresp    (),
+     .reg_bready      (1'b1),
+     .reg_bvalid      (),
+     .reg_bresp       (),
 
-     .reg_arvalid  (1'b0),
-     .reg_arready  (),
-     .reg_araddr   ('0),
+     .reg_arvalid     (1'b0),
+     .reg_arready     (),
+     .reg_araddr      ('0),
 
-     .reg_rready   (1'b1),
-     .reg_rvalid   (),
-     .reg_rdata    (),
-     .reg_rresp    (),
+     .reg_rready      (1'b1),
+     .reg_rvalid      (),
+     .reg_rdata       (),
+     .reg_rresp       (),
 
      // Master memory
-     .mem_clk      (ui_clk),
-     .mem_reset    (),
+     .mem_clk         (ui_clk),
+     .mem_reset       (),
 
-     .mem_arid     (s_ddr_arid),
-     .mem_araddr   (s_ddr_araddr),
-     .mem_arlen    (s_ddr_arlen),
-     .mem_arsize   (s_ddr_arsize),
-     .mem_arburst  (s_ddr_arburst),
-     .mem_arlock   (s_ddr_arlock),
-     .mem_arvalid  (s_ddr_arvalid),
-     .mem_arready  (s_ddr_arready),
+     .mem_arid        (s_ddr_arid),
+     .mem_araddr      (s_ddr_araddr),
+     .mem_arlen       (s_ddr_arlen),
+     .mem_arsize      (s_ddr_arsize),
+     .mem_arburst     (s_ddr_arburst),
+     .mem_arlock      (s_ddr_arlock),
+     .mem_arvalid     (s_ddr_arvalid),
+     .mem_arready     (s_ddr_arready),
 
-     .mem_rready   (s_ddr_rready),
-     .mem_rid      (s_ddr_rid),
-     .mem_rdata    (s_ddr_rdata),
-     .mem_rresp    (s_ddr_rresp),
-     .mem_rlast    (s_ddr_rlast),
-     .mem_rvalid   (s_ddr_rvalid),
+     .mem_rready      (s_ddr_rready),
+     .mem_rid         (s_ddr_rid),
+     .mem_rdata       (s_ddr_rdata),
+     .mem_rresp       (s_ddr_rresp),
+     .mem_rlast       (s_ddr_rlast),
+     .mem_rvalid      (s_ddr_rvalid),
 
-     .vga_clk      (vga_clk),
-     .vga_hsync    (vga_hsync),
-     .vga_hblank   (vga_hblank),
-     .vga_vsync    (vga_vsync),
-     .vga_vblank   (vga_vblank),
-     .vga_rgb      (int_vga_rgb)
+     .vga_clk         (vga_clk),
+     .vga_hsync       (vga_hsync),
+     .vga_hblank      (vga_hblank),
+     .vga_vsync       (vga_vsync),
+     .vga_vblank      (vga_vblank),
+     .vga_rgb         (int_vga_rgb),
+     .vga_sync_toggle (vga_sync_toggle)
      );
 
   assign vga_rgb = {int_vga_rgb[23:20],int_vga_rgb[15:12], int_vga_rgb[7:4]};
@@ -728,11 +739,29 @@ module final_project
 
   logic [1:0] last_write;
   logic       update_text;
-  (* mark_debug = "TRUE" *) logic [2:0] update_text_sync;
+  logic [2:0] update_text_sync;
+  logic       update_temp;
+  logic [2:0] update_temp_sync;
+  logic             update_temp_capt;
+
+  typedef struct packed
+                 {
+                   logic [8:0]       address;
+                   logic [15:0][7:0] data;
+                 } pdm_data_t;
+
+  (* mark_debug = "TRUE" *) logic             pdm_push;
+  logic             pdm_pop;
+  (* mark_debug = "TRUE" *) pdm_data_t        pdm_din;
+  pdm_data_t        pdm_dout;
+  logic             pdm_empty;
 
   initial begin
     update_text      = '0;
     update_text_sync = '0;
+    update_temp      = '0;
+    update_temp_sync = '0;
+    update_temp_capt = '0;
   end
 
   // Clock reconfiguration
@@ -1096,20 +1125,25 @@ module final_project
                 TEXT_WRITE[6]
                 } text_sm_t;
 
-  (* mark_debug = "true" *) text_sm_t text_sm;
+  text_sm_t text_sm;
 
   initial begin
     text_sm = TEXT_IDLE;
+
   end
 
   logic [25:0]      total_page;
   logic [2:0][3:0]  char_x;
   logic [12:0]      real_pitch;
   logic [15:0][7:0] capt_text;
+  logic [15:0][7:0] capt_temp;
   logic [26:0]      y_offset;
 
   always @(posedge ui_clk) begin
     update_text_sync <= update_text_sync << 1 | update_text;
+    update_temp_sync <= update_temp_sync << 1 | update_temp;
+    if (^update_temp_sync[2:1]) update_temp_capt <= '1;
+    pdm_pop          <= '0;
     s_ddr_awvalid    <= '0;
     done             <= s_ddr_awaddr >= total_page;
     char_x[1]        <= char_x[0];
@@ -1145,6 +1179,24 @@ module final_project
           s_ddr_awvalid <= '0;
           s_ddr_wvalid  <= '0;
           text_sm       <= TEXT_WRITE0;
+        end else if (update_temp_capt) begin
+          // We'll start the temperature output on line 16
+          y_offset         <= 16 * real_pitch;
+          update_temp_capt <= '0;
+          char_index       <= capt_temp[0];
+          capt_text        <= capt_temp;
+          s_ddr_awvalid    <= '0;
+          s_ddr_wvalid     <= '0;
+          text_sm          <= TEXT_WRITE0;
+        end else if (!pdm_empty) begin
+          pdm_pop          <= '1;
+          char_y           <= '1; // Force only one line to be written
+          update_temp_capt <= '0;
+          s_ddr_awvalid    <= '1;
+          s_ddr_awaddr     <= pdm_dout.address * real_pitch;
+          s_ddr_wvalid     <= '1;
+          s_ddr_wdata      <= pdm_dout.data;
+          text_sm          <= TEXT_WRITE2;
         end
       end // case: TEXT_IDLE
       TEXT_CLR0: begin
@@ -1281,9 +1333,9 @@ module final_project
     endcase // case (text_sm)
   end // always @ (posedge ui_clk)
 
-  (* mark_debug = "TRUE" *) logic [7:0]  ps2_rx_data;
+  logic [7:0]  ps2_rx_data;
   logic        ps2_rx_user;
-  (* mark_debug = "TRUE" *) logic        ps2_rx_valid;
+  logic        ps2_rx_valid;
   logic        ps2_rx_err;
   // PS/2 interface
   ps2_host
@@ -1310,11 +1362,12 @@ module final_project
      .rx_ready         (1'b1)
      );
 
+  logic ftemp; // 0 = celsius, 1 = Fahrenheit
   // Clock crossing logic
   initial begin
+    ftemp          = '0;
     ps2_toggle     = '0;
-    for (int i = 0; i < 16; i++)
-      ps2_data_store[i] = i;
+    ps2_data_store = '{default: " "};
   end
 
   // toggle sync and capture the data
@@ -1322,6 +1375,10 @@ module final_project
     if (ps2_rx_valid) begin
       ps2_toggle    <= ~ps2_toggle;
       ps2_data_capt <= '{data: ps2_rx_data, error: ps2_rx_err};
+      case (ps2_rx_data)
+        8'h2B: ftemp <= '1; // F = fahrenheit
+        8'h21: ftemp <= '0; // C = celsius
+      endcase
     end
   end
 
@@ -1360,35 +1417,157 @@ module final_project
           ps2_data_store[i*2+:2] <= ps2_data_store[(i-1)*2+:2];
         end
       end // for (int i = 0; i < PS2_DEPTH; i++)
-      /*
-      for (int i = 0; i < PS2_DEPTH; i++) begin
-        if (i == PS2_DEPTH-1) begin
-          for (int j = 1; j >= 0; j--) begin
-            case (ps2_data_capt.data[j*4+:4])
-              0:  ps2_data_store[i*2+j] <= 8'h30;
-              1:  ps2_data_store[i*2+j] <= 8'h31;
-              2:  ps2_data_store[i*2+j] <= 8'h32;
-              3:  ps2_data_store[i*2+j] <= 8'h33;
-              4:  ps2_data_store[i*2+j] <= 8'h34;
-              5:  ps2_data_store[i*2+j] <= 8'h35;
-              6:  ps2_data_store[i*2+j] <= 8'h36;
-              7:  ps2_data_store[i*2+j] <= 8'h37;
-              8:  ps2_data_store[i*2+j] <= 8'h38;
-              9:  ps2_data_store[i*2+j] <= 8'h39;
-              10: ps2_data_store[i*2+j] <= 8'h41;
-              11: ps2_data_store[i*2+j] <= 8'h42;
-              12: ps2_data_store[i*2+j] <= 8'h43;
-              13: ps2_data_store[i*2+j] <= 8'h44;
-              14: ps2_data_store[i*2+j] <= 8'h45;
-              15: ps2_data_store[i*2+j] <= 8'h46;
-            endcase // case (ps2_data_capt[i*4+:4])
-          end
-        end else begin
-          ps2_data_store[i*2+:2] <= ps2_data_store[(i+1)*2+:2];
-        end
-      end
-       */
     end
   end // always @ (posedge ui_clk)
+
+  // Temperature sensor
+  i2c_wrapper
+    #
+    (
+     .CLK_PER (5)
+     )
+  u_i2c_wrapper
+    (
+     .clk              (clk200),
+
+     .TMP_SCL          (TMP_SCL),
+     .TMP_SDA          (TMP_SDA),
+     .TMP_INT          (TMP_INT),
+     .TMP_CT           (TMP_CT),
+
+     .ftemp            (ftemp),
+
+     .update_temp      (update_temp),
+     .capt_temp        (capt_temp)
+     );
+
+  // Audio data
+  (* mark_debug = "TRUE" *)logic [6:0] amplitude;
+  (* mark_debug = "TRUE" *)logic       amplitude_valid;
+
+  pdm_inputs
+    #
+    (
+     .CLK_FREQ         (200)    // Mhz
+     )
+  u_pdm_inputs
+    (
+     .clk              (clk200),
+
+     // Microphone interface
+     .m_clk            (m_clk),
+     .m_clk_en         (m_clk_en),
+     .m_data           (m_data),
+
+     // Amplitude outputs
+     .amplitude        (amplitude),
+     .amplitude_valid  (amplitude_valid)
+     );
+
+  // data storage
+  // Setup a storage buffer for amplitudes. Make it large enough that we can
+  // window into it and it remains stable
+  localparam AMP_DEPTH = 1024;
+
+  logic [6:0] amplitude_store[AMP_DEPTH];
+  (* mark_debug = "TRUE" *) logic [$clog2(AMP_DEPTH)-1:0] amp_rd, amp_wr;
+  (* mark_debug = "TRUE" *) logic [8:0]                   rd_count;
+
+  typedef enum bit [1:0]
+               {
+                WAVE_IDLE,
+                WAVE_READ[2]
+                } wave_sm_t;
+
+  (* mark_debug = "TRUE" *) wave_sm_t wave_sm;
+
+  initial begin
+    amplitude_store = '{default: '0};
+    amp_rd          = '0;
+    amp_wr          = '0;
+    rd_count        = '0;
+    pdm_push        = '0;
+    wave_sm         = WAVE_IDLE;
+  end
+
+  (* async_reg = "TRUE" *) logic [2:0] vga_sync_toggle_sync;
+  (* mark_debug = "TRUE" *) logic [6:0] amp_data;
+  always @(posedge clk200) begin
+    if (amplitude_valid) begin
+      amplitude_store[amp_wr] <= amplitude;
+      amp_wr                  <= amp_wr + 1'b1;
+    end
+    amp_data <= amplitude_store[amp_rd];
+  end
+  always @(posedge clk200) begin
+    vga_sync_toggle_sync <= vga_sync_toggle_sync << 1 | vga_sync_toggle;
+    pdm_push <= '0;
+    case (wave_sm)
+      WAVE_IDLE: begin
+        if (^vga_sync_toggle_sync[2:1]) begin
+          // get the amplitude data from behind the write pointer
+          // by 256 samples
+          amp_rd   <= amp_wr - 256;
+          rd_count <= '0;
+          wave_sm  <= WAVE_READ0;
+        end
+      end
+      WAVE_READ0: begin
+        // address to ram valid this cycle
+        amp_rd   <= amp_rd + 1'b1;
+        rd_count <= rd_count + 1'b1;
+        wave_sm  <= WAVE_READ1;
+      end
+      WAVE_READ1: begin
+        // address to ram valid this cycle
+        amp_rd           <= amp_rd + 1'b1;
+        rd_count         <= rd_count + 1'b1;
+        pdm_push         <= '1;
+        pdm_din.address  <= 31 + rd_count;
+        pdm_din.data     <= 1'b1 << amp_data;
+        if (rd_count[8]) wave_sm <= WAVE_IDLE;
+      end
+    endcase // case (wave_sm)
+  end // always @ (posedge clk200)
+
+  xpm_fifo_async
+    #
+    (
+     .FIFO_WRITE_DEPTH       (512),
+     .WRITE_DATA_WIDTH       ($bits(pdm_din)),
+     .READ_MODE              ("fwft")
+     )
+  u_xpm_fifo_async
+    (
+     .sleep                  ('0),
+     .rst                    (clk200_reset),
+
+     .wr_clk                 (clk200),
+     .wr_en                  (pdm_push),
+     .din                    (pdm_din),
+     .full                   (),
+     .prog_full              (),
+     .wr_data_count          (),
+     .overflow               (),
+     .wr_rst_busy            (),
+     .almost_full            (),
+     .wr_ack                 (),
+
+     .rd_clk                 (ui_clk),
+     .rd_en                  (pdm_pop),
+     .dout                   (pdm_dout),
+     .empty                  (pdm_empty),
+     .prog_empty             (),
+     .rd_data_count          (),
+     .underflow              (),
+     .rd_rst_busy            (),
+     .almost_empty           (),
+     .data_valid             (),
+
+     .injectsbiterr          ('0),
+     .injectdbiterr          ('0),
+     .sbiterr                (),
+     .dbiterr                ()
+     );
 
 endmodule // vga

@@ -1,10 +1,10 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.1 (lin64) Build 2902540 Wed May 27 19:54:35 MDT 2020
-// Date        : Wed Nov 18 18:30:13 2020
+// Date        : Mon Dec  7 09:43:10 2020
 // Host        : XilinxDev running 64-bit Ubuntu 20.04.1 LTS
 // Command     : write_verilog -force -mode funcsim
-//               /home/fbruno/git/books/Learn-FPGA-Programming/CH9/IP/sys_clk/sys_clk_sim_netlist.v
+//               /home/fbruno/git/books/Learn-FPGA-Programming/CH9/build/IP/sys_clk/sys_clk_sim_netlist.v
 // Design      : sys_clk
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
