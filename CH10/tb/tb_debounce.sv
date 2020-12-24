@@ -46,5 +46,7 @@ module tb_debounce;
     end
     sig_in     = '0;
     repeat (100)  @(posedge clk);
+    $display("Test Finished!");
+    $finish;
   end // initial begin
 endmodule // tb_debounce

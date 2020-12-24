@@ -50,6 +50,7 @@ module i2c_wrapper
     if (temp_valid) begin
       update_temp             <= ~update_temp;
       capt_temp               <= "     F 0000.0000";
+      capt_temp[9]            <= 8'h0C; // Degree symbol
       if (ftemp) capt_temp[10] <= "F";
       else       capt_temp[10] <= "C";
       for (int i = 7; i >= 0; i--) begin
