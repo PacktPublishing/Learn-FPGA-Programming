@@ -205,7 +205,7 @@ module tb_ps2;
 
         repeat (100) @(posedge clk);
         $display("Captured data: %h", data_capt[8:1]);
-        if (data_capt[8:1] != exp_data) begin
+        if (data_capt[7:0] != exp_data) begin
           $error("Data miscompared! Expected %h != Received %h",
                  exp_data, data_capt[8:1]);
         end 
