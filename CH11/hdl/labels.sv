@@ -1,5 +1,6 @@
 module labels
   (
+   input wire         clk,
    input wire         addition,
    input wire         subtraction,
    input wire [7:0]   in0, in1,
