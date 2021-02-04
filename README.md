@@ -43,7 +43,7 @@ With the following software and hardware list you can run all code files present
 | 1-11 | Xilinx Vivado 2020.1 | Windows, Linux (Centos 7.4-7.7 or Ubuntu 18.04 or 20.04) |
 | 1-11 | Nexys A7 Board | Windows, Linux (Centos 7.4-7.7 or Ubuntu 18.04 or 20.04) |
 
-We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://static.packt-cdn.com/downloads/9781789805413.pdf).
+We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://static.packt-cdn.com/downloads/9781789805413_ColorImages.pdf).
 
 ### Related products
 * Practical Python Programming for IoT [[Packt]](https://www.packtpub.com/product/Practical-Python-Programming-for-IoT/9781838982461?utm_source=github&utm_medium=repository&utm_campaign=9781838982461) [[Amazon]](https://www.amazon.com/dp/1838982469)
