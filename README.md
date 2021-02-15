@@ -4,7 +4,7 @@
 
 This is the code repository for [FPGA Programming for Beginners](https://www.packtpub.com/product/FPGA-Programming-for-Beginners/9781789805413?utm_source=github&utm_medium=repository&utm_campaign=9781789805413), published by Packt.
 
-**Bring your ideas to life by creating hardware designs and electronic circuits with SystemVerilog**
+**Learn FPGA Programming, published by Packt**
 
 ## What is this book about?
 Field Programmable Gate Arrays (FPGAs) have now become a core part of most modern electronic and computer systems. However, to implement your ideas in the real world, you need to get your head around the FPGA architecture, its toolset, and critical design considerations. FPGA Programming for Beginners will help you bring your ideas to life by guiding you through the entire process of programming FPGAs and designing hardware circuits using SystemVerilog. 
