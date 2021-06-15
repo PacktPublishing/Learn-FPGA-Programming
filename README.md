@@ -45,6 +45,11 @@ With the following software and hardware list you can run all code files present
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://static.packt-cdn.com/downloads/9781789805413_ColorImages.pdf).
 
+## Errata
+
+
+* Page 24 (Paragraph 2, line 4) and Page 34 (Paragraph 1, line 2): **Appendix** _should be_ **github folder /CHx/build/** which contains the tcl file for non-project
+
 ### Related products
 * Practical Python Programming for IoT [[Packt]](https://www.packtpub.com/product/Practical-Python-Programming-for-IoT/9781838982461?utm_source=github&utm_medium=repository&utm_campaign=9781838982461) [[Amazon]](https://www.amazon.com/dp/1838982469)
 
