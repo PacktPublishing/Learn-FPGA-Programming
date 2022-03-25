@@ -123,14 +123,14 @@ module tb;
         BTNR: begin
           sw_alu = signed'(SW[15:8]) - signed'(SW[7:0]);
           if (sw_alu != LED) begin
-            $display("FAIL: LED != sum of SW[15:8] + SW[7:0]");
+            $display("FAIL: LED != difference of SW[15:8] - SW[7:0]");
             $stop;
           end
         end
         BTNC: begin
           sw_alu = signed'(SW[15:8]) * signed'(SW[7:0]);
           if (sw_alu != LED) begin
-            $display("FAIL: LED != Difference of SW[15:8] - SW[7:0]");
+            $display("FAIL: LED != product of SW[15:8] * SW[7:0]");
             $stop;
           end
         end
@@ -154,13 +154,13 @@ module tb;
     end else if (TEST_CASE == "SUB") begin
       sw_alu = signed'(SW[15:8]) - signed'(SW[7:0]);
       if (sw_alu != LED_TB) begin
-        $display("FAIL: LED != sum of SW[15:8] + SW[7:0]");
+        $display("FAIL: LED != difference of SW[15:8] + SW[7:0]");
         $stop;
       end
     end else if (TEST_CASE == "MULT") begin
       sw_alu = signed'(SW[15:8]) * signed'(SW[7:0]);
       if (sw_alu != LED_TB) begin
-        $display("FAIL: LED != Difference of SW[15:8] - SW[7:0]");
+        $display("FAIL: LED != product of SW[15:8] - SW[7:0]");
         $stop;
       end
     end // if ((TEST_CASE == "LEADING_ONES") || (TEST_CASE == "ALL"))
