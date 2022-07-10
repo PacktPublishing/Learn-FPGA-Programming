@@ -22,6 +22,10 @@ module tb;
 
   // Checking
   always @(SW, LED) begin
+  $display("1 SW %2b  : LED %db ", SW[1:0], LED[3:0] );
+  #20;
+  $display("2 SW %2b  : LED %db ", SW[1:0], LED[3:0] );
+  
     if (!SW[0] !== LED[0]) begin
       $display("FAIL: NOT Gate mismatch");
       $stop;
