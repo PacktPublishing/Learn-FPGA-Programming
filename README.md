@@ -58,3 +58,7 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 ## Get to Know the Author
 **Frank Bruno**
 is an experienced high-performance design engineer specializing in FPGAs with some ASIC experience. He has worked for companies such as SpaceX and Number Nine, and currently works as an FPGA engineer for Allstone Trading.
+### Download a free PDF
+
+ <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply click on the link to claim your free PDF.</i>
+<p align="center"> <a href="https://packt.link/free-ebook/9781789805413">https://packt.link/free-ebook/9781789805413 </a> </p>
