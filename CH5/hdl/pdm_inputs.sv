@@ -26,7 +26,8 @@ module pdm_inputs
 
   initial begin
     sample_counter = '0;
-    counter        = '0;
+    counter[0]     = '0;
+    counter[1]     = 8'd100;
     m_clk          = '0;
     clk_counter    = '0;
   end
@@ -41,7 +42,6 @@ module pdm_inputs
       m_clk_en    <= ~m_clk;
     end else begin
       clk_counter <= clk_counter + 1;
-      if (clk_counter == CLK_COUNT - 2) m_clk_en    <= ~m_clk;
     end
 
     if (m_clk_en) begin
@@ -52,15 +52,15 @@ module pdm_inputs
         amplitude         <= sample_counter[0];
         amplitude_valid   <= '1;
         sample_counter[0] <= '0;
-      end else if (counter[0] < 128) begin
+      end else if (counter[0] < 127) begin
         sample_counter[0] <= sample_counter[0] + m_data;
       end
-      if (counter[1] == 227) begin
+      if (counter[1] == 199) begin
         counter[1]        <= '0;
-        amplitude         <= sample_counter[1] + m_data;
+        amplitude         <= sample_counter[1];
         amplitude_valid   <= '1;
         sample_counter[1] <= '0;
-      end else if (counter[1] > 100) begin
+      end else if (counter[1] <127) begin
         sample_counter[1] <= sample_counter[1] + m_data;
       end
     end

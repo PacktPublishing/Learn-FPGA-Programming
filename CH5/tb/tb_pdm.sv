@@ -92,9 +92,9 @@ module tb_pdm;
     int_count <= int_count + 1'b1;
     if (&int_count) counter <= counter + 1'b1;
     if (counter > 127) begin
-      data_in <= ~sin_table[counter[6:0]] + 1'b1;
+      data_in <= 7'h40 - sin_table[counter[6:0]];
     end else begin
-      data_in <= sin_table[counter[6:0]];
+      data_in <= 7'h40 + sin_table[counter[6:0]];
     end
   end
 
